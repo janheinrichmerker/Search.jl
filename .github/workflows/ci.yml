@@ -1,0 +1,32 @@
+name: "CI"
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    name: "🧪 Test"
+    runs-on: ubuntu-20.04
+    steps:
+      - name: "📥 Check-out"
+        uses: actions/checkout@v2
+      - name: "🧰 Install Julia"
+        uses: julia-actions/setup-julia@v1
+        with:
+          version: "1.5"
+      - name: "💾 Cache artifacts"
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-artifacts
+        with:
+          path: ~/.julia/artifacts
+          key: ${{ runner.os }}-test-${{ env.cache-name }}-${{ hashFiles('**/Project.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-test-${{ env.cache-name }}-
+            ${{ runner.os }}-test-
+            ${{ runner.os }}-
+      - name: "🏗️ Build package"
+        uses: julia-actions/julia-buildpkg@v1
+      - name: "🧪 Run tests"
+        uses: julia-actions/julia-runtest@v1

@@ -2,14 +2,9 @@ using Documenter
 using Search
 
 makedocs(
-    sitename = "Search",
-    format = Documenter.HTML(),
-    modules = [Search]
+    sitename="Search",
+    format=Documenter.HTML(),
+    modules=[Search]
 )
 
-# Documenter can also automatically deploy documentation to gh-pages.
-# See "Hosting Documentation" and deploydocs() in the Documenter manual
-# for more information.
-#=deploydocs(
-    repo = "<repository url>"
-)=#
+deploydocs(repo="github.com/heinrichreimer/Search.jl")

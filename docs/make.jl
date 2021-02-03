@@ -10,4 +10,7 @@ makedocs(
     ],
 )
 
-deploydocs(repo="github.com/heinrichreimer/Search.jl")
+deploydocs(
+    repo="github.com/heinrichreimer/Search.jl",
+    devbranch="main"
+)

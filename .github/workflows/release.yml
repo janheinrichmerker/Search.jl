@@ -6,77 +6,9 @@ on:
       - v*
 
 jobs:
-  test:
-    name: "🧪 Test"
-    runs-on: ubuntu-20.04
-    steps:
-      - name: "📥 Check-out"
-        uses: actions/checkout@v2
-      - name: "🧰 Install Julia"
-        uses: julia-actions/setup-julia@v1
-        with:
-          version: "1.5"
-      - name: "💾 Cache artifacts"
-        uses: actions/cache@v1
-        env:
-          cache-name: cache-artifacts
-        with:
-          path: ~/.julia/artifacts
-          key: ${{ runner.os }}-test-${{ env.cache-name }}-${{ hashFiles('**/Project.toml') }}
-          restore-keys: |
-            ${{ runner.os }}-test-${{ env.cache-name }}-
-            ${{ runner.os }}-test-
-            ${{ runner.os }}-
-      - name: "🏗️ Build package"
-        uses: julia-actions/julia-buildpkg@v1
-      - name: "🧪 Run tests"
-        uses: julia-actions/julia-runtest@v1
-      - name: "📊 Process test coverage"
-        uses: julia-actions/julia-processcoverage@v1
-      - name: "📤 Upload test coverage"
-        uses: actions/upload-artifact@v2
-        with:
-          path: lcov.info
-          name: Test coverage
-      - name: "📤 Publish test coverage"
-        uses: codecov/codecov-action@v1
-        with:
-          file: lcov.info
-  docs:
-    name: "📚 Documentation"
-    runs-on: ubuntu-20.04
-    needs:
-      - test
-    steps:
-      - name: "📥 Check-out"
-        uses: actions/checkout@v2
-      - name: "🧰 Install Julia"
-        uses: julia-actions/setup-julia@v1
-        with:
-          version: "1.5"
-      - name: "💾 Cache Julia artifacts"
-        uses: actions/cache@v1
-        env:
-          cache-name: cache-artifacts
-        with:
-          path: ~/.julia/artifacts
-          key: ${{ runner.os }}-docs-${{ env.cache-name }}-${{ hashFiles('**/Project.toml') }}
-          restore-keys: |
-            ${{ runner.os }}-docs-${{ env.cache-name }}-
-            ${{ runner.os }}-docs-
-            ${{ runner.os }}-
-      - name: "🏗️ Build Julia package"
-        uses: julia-actions/julia-buildpkg@v1
-      - name: "📚 Deploy documentation to GitHub Pages"
-        uses: julia-actions/julia-docdeploy@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DOCUMENTER_KEY: ${{ secrets.DOCUMENTER_KEY }}
   release:
     name: "🚀 Release"
     runs-on: ubuntu-20.04
-    needs:
-      - test
     steps:
       - name: "📥 Check-out"
         uses: actions/checkout@v2
@@ -86,7 +18,7 @@ jobs:
       - name: "✏️ Generate changelog"
         id: generate-changelog
         if: runner.os == 'Linux'
-        uses: heinrichreimer/action-github-changelog-generator@v2
+        uses: heinrichreimer/action-github-changelog-generator@v2.2
         with:
           onlyLastTag: "true"
           stripHeaders: "true"

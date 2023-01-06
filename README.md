@@ -1,4 +1,4 @@
-[![GitHub Actions](https://img.shields.io/github/workflow/status/heinrichreimer/Search.jl/CI?style=flat-square)](https://github.com/heinrichreimer/Search.jl/actions?query=workflow%3ACI)
+[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/heinrichreimer/Search.jl/ci.yml?branch=main&style=flat-square)](https://github.com/heinrichreimer/Search.jl/actions/workflows/ci.yml)
 
 ![Logo](docs/src/assets/logo-small.png)
 
